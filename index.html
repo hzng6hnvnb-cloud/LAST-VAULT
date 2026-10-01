@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07080c">
+    <title>آخر خزنة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<div class="noise"></div>
+
+<!-- شاشة البداية -->
+<section id="intro" class="screen active">
+    <div class="intro-content">
+
+        <div class="vault-icon">
+            <div class="vault-ring"></div>
+            <div class="vault-center">LV</div>
+        </div>
+
+        <div class="eyebrow">ONLINE HEIST</div>
+
+        <h1>آخر خزنة</h1>
+
+        <p>
+            ادخل الخزنة... وخذ كل شيء قبل انتهاء الوقت.
+        </p>
+
+        <button class="main-btn" id="enterBtn">
+            <span>دخول اللعبة</span>
+            <b>←</b>
+        </button>
+
+        <div class="version">الإصدار التجريبي • 01</div>
+    </div>
+</section>
+
+
+<!-- القائمة الرئيسية -->
+<section id="home" class="screen">
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-mark">LV</div>
+            <div>
+                <strong>آخر خزنة</strong>
+                <small>LAST VAULT</small>
+            </div>
+        </div>
+
+        <div class="online-status">
+            <i></i>
+            متصل
+        </div>
+    </header>
+
+    <main class="home-content">
+
+        <div class="home-title">
+            <span>جاهز للعملية؟</span>
+            <h2>اختر طريقة الدخول</h2>
+            <p>كوّن فريقك وادخل الغرفة.</p>
+        </div>
+
+        <div class="home-cards">
+
+            <button class="choice-card" id="createBtn">
+                <div class="card-icon">+</div>
+                <div class="card-text">
+                    <strong>إنشاء غرفة</strong>
+                    <span>أنشئ عملية جديدة وادعُ أصحابك</span>
+                </div>
+                <b>←</b>
+            </button>
+
+            <button class="choice-card" id="joinBtn">
+                <div class="card-icon join">↗</div>
+                <div class="card-text">
+                    <strong>دخول غرفة</strong>
+                    <span>أدخل رمز الغرفة المكوّن من 4 أرقام</span>
+                </div>
+                <b>←</b>
+            </button>
+
+        </div>
+
+        <div class="feature-row">
+            <div>
+                <span>01</span>
+                لاعبين
+            </div>
+            <div>
+                <span>02</span>
+                فرق
+            </div>
+            <div>
+                <span>03</span>
+                عملية
+            </div>
+        </div>
+
+    </main>
+</section>
+
+
+<!-- نافذة إنشاء غرفة -->
+<div id="createModal" class="modal">
+    <div class="modal-box">
+
+        <button class="close" data-close="createModal">×</button>
+
+        <span class="modal-label">NEW ROOM</span>
+        <h3>أنشئ غرفتك</h3>
+        <p>سيتم إنشاء رمز خاص من 4 أرقام.</p>
+
+        <div class="room-code big" id="generatedCode">----</div>
+
+        <button class="main-btn full" id="createRoom">
+            <span>إنشاء الغرفة</span>
+            <b>←</b>
+        </button>
+
+    </div>
+</div>
+
+
+<!-- نافذة دخول غرفة -->
+<div id="joinModal" class="modal">
+    <div class="modal-box">
+
+        <button class="close" data-close="joinModal">×</button>
+
+        <span class="modal-label">JOIN ROOM</span>
+        <h3>دخول الغرفة</h3>
+        <p>اكتب رمز الغرفة المكوّن من 4 أرقام.</p>
+
+        <input
+            id="roomInput"
+            class="room-input"
+            type="text"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="0000"
+        >
+
+        <div id="joinError" class="error"></div>
+
+        <button class="main-btn full" id="joinRoom">
+            <span>دخول</span>
+            <b>←</b>
+        </button>
+
+    </div>
+</div>
+
+
+<!-- غرفة الانتظار -->
+<section id="lobby" class="screen">
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-mark">LV</div>
+            <div>
+                <strong>آخر خزنة</strong>
+                <small>غرفة خاصة</small>
+            </div>
+        </div>
+
+        <button class="small-btn" id="leaveLobby">مغادرة</button>
+    </header>
+
+    <main class="lobby">
+
+        <div class="room-heading">
+            <span>رمز العملية</span>
+
+            <div class="room-code">
+                <strong id="lobbyCode">----</strong>
+                <button id="copyCode">نسخ</button>
+            </div>
+        </div>
+
+        <div class="players-panel">
+
+            <div class="panel-head">
+                <div>
+                    <span>الفريق</span>
+                    <h3>اللاعبون</h3>
+                </div>
+
+                <div class="player-count">
+                    <b id="playerCount">1</b>/8
+                </div>
+            </div>
+
+            <div id="playersList" class="players-list">
+                <div class="player me">
+                    <div class="avatar">أ</div>
+                    <div>
+                        <strong>أنت</strong>
+                        <span>جاهز</span>
+                    </div>
+                    <i></i>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="main-btn full start-btn" id="startGame">
+            <span>ابدأ العملية</span>
+            <b>←</b>
+        </button>
+
+        <p class="waiting-note">
+            في اللعب الحقيقي، سيظهر هنا اللاعبون الذين يدخلون من أجهزتهم.
+        </p>
+
+    </main>
+</section>
+
+
+<!-- شاشة اللعبة -->
+<section id="game" class="screen">
+
+    <div class="game-top">
+
+        <div class="game-brand">
+            LAST VAULT
+        </div>
+
+        <div class="timer">
+            <span>الوقت</span>
+            <strong id="timer">05:00</strong>
+        </div>
+
+        <div class="objective">
+            <span>المهمة</span>
+            <strong id="objective">اجمع بطاقات الوصول</strong>
+        </div>
+
+    </div>
+
+    <div class="game-area">
+
+        <div class="map">
+
+            <div class="map-grid"></div>
+
+            <div class="room room-a">
+                <span>المخزن</span>
+            </div>
+
+            <div class="room room-b">
+                <span>غرفة المراقبة</span>
+            </div>
+
+            <div class="room vault-room">
+                <span>الخزنة</span>
+                <div class="vault">₿</div>
+            </div>
+
+            <div class="door door-a"></div>
+            <div class="door door-b"></div>
+
+            <div class="camera camera-a">◉</div>
+            <div class="camera camera-b">◉</div>
+
+            <div class="item card-one">▣</div>
+            <div class="item card-two">▣</div>
+            <div class="item card-three">▣</div>
+
+            <div id="player" class="player-character">
+                <div class="player-head"></div>
+                <div class="player-body"></div>
+                <span>أنت</span>
+            </div>
+
+            <div class="other-player p1">
+                <div></div>
+                <span>لاعب 2</span>
+            </div>
+
+            <div class="other-player p2">
+                <div></div>
+                <span>لاعب 3</span>
+            </div>
+
+            <div class="escape">
+                <span>منطقة الهروب</span>
+                <strong>EXIT</strong>
+            </div>
+
+        </div>
+
+        <!-- معلومات الجانب -->
+        <aside class="game-side">
+
+            <div class="side-card">
+                <span>الأهداف</span>
+
+                <div class="task done">
+                    <i>✓</i>
+                    <div>
+                        <strong>العثور على البطاقة الأولى</strong>
+                        <small>مكتملة</small>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <i>2</i>
+                    <div>
+                        <strong>العثور على البطاقات</strong>
+                        <small>0 / 3</small>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <i>3</i>
+                    <div>
+                        <strong>فتح الخزنة</strong>
+                        <small>مقفلة</small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="side-card players-mini">
+                <span>اللاعبون</span>
+
+                <div><i></i> أنت <b>اللص</b></div>
+                <div><i></i> لاعب 2 <b>حارس</b></div>
+                <div><i></i> لاعب 3 <b>لص</b></div>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- تحكم الجوال -->
+    <div class="mobile-controls">
+
+        <div class="joystick">
+            <button data-dir="up">↑</button>
+            <button data-dir="left">←</button>
+            <button data-dir="right">→</button>
+            <button data-dir="down">↓</button>
+        </div>
+
+        <button class="action-btn">تفاعل</button>
+
+    </div>
+
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
